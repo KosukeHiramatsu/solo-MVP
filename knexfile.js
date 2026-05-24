@@ -7,7 +7,14 @@ module.exports = {
   development: {
     client: "pg",
     connection: {
-      filename: "./dev.sqlite3",
+      database: process.env.DB_NAME,
+      user: process.env.DB_USER,
+    },
+    migrations: {
+      directory: "./db/migrations",
+    },
+    seeds: {
+      directory: "./db/seeds",
     },
   },
 
@@ -16,14 +23,10 @@ module.exports = {
     connection: {
       database: "my_db",
       user: "username",
-      password: "password",
     },
     pool: {
       min: 2,
       max: 10,
-    },
-    migrations: {
-      tableName: "knex_migrations",
     },
   },
 };

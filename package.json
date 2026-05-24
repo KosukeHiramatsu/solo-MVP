@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "node --env-file=db/.env nodemon server.js",
+    "dev": " nodemon --env-file=db/.env server.js",
     "build": "cd front && npm install && npm run build && rm -rf ../public && cp -r dist ../public",
     "db:migrate": "knex migrate:latest",
     "db:migrate-make": "knex migrate:make",
@@ -19,7 +19,8 @@
   "type": "commonjs",
   "dependencies": {
     "express": "^5.2.1",
-    "knex": "^3.2.10"
+    "knex": "^3.2.10",
+    "pg": "^8.21.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.14"
