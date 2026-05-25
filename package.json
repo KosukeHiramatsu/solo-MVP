@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": " nodemon --env-file=db/.env server.js",
+    "start": "node src/server.js",
+    "dev": "nodemon --exec 'node --env-file=.env' src/server.js",
     "build": "cd front && npm install && npm run build && rm -rf ../public && cp -r dist ../public",
     "db:migrate": "knex migrate:latest",
     "db:migrate-make": "knex migrate:make",
