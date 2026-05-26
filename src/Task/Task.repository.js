@@ -1,10 +1,17 @@
-function createProjectRepository(knex, table = "project") {
+function createTaskRepository(knex, table = "task") {
   /**
    * @param {number} limit - プロジェクトの最大数（制限）
    * @return {Promise<Array>} - すべてのプロジェクトデータ
    */
-  const list = async (limit = 100) =>
-    await knex.select("*").from(table).limit(limit);
+  const list = async (id) => {
+    const result = await knex
+      .select("*")
+      .where(`${table}.related_project_id`, id)
+      .from(table)
+      .returning("*");
+    console.log(result);
+    return result;
+  };
   /**
    * @param {number} id - プロジェクト ID
    * @return {Promise<Object|undefined>} - id に合致する注文データ、不合致の場合は undefined
@@ -24,12 +31,17 @@ function createProjectRepository(knex, table = "project") {
   const create = async (payload) => {
     const result = await knex(table)
       .insert({
-        name: payload.name,
-        region: payload.region,
-        detail: payload.detail,
-        date_of_created: payload.date_of_created,
-        date_of_lastEdit: payload.date_of_lastEdit,
-        createdBy_id: payload.createdBy_id,
+        place_name: payload.place_name,
+        type: payload.type,
+        detail: payload.detail ?? null,
+        item: payload.item ?? null,
+        URL_photo: payload.URL_photo ?? null,
+        URL_home: payload.URL_home ?? null,
+        URL_googlemap: payload.URL_googlemap ?? null,
+        arrive_time: payload.arrive_time,
+        departure_time: payload.departure_time,
+        previous_place_id: payload.previous_place_id ?? null,
+        related_project_id: payload.related_project_id,
       })
       .returning("*");
     return result[0];
@@ -59,4 +71,4 @@ function createProjectRepository(knex, table = "project") {
   return { list, find, create, update, remove };
 }
 
-module.exports = { createProjectRepository };
+module.exports = { createTaskRepository };

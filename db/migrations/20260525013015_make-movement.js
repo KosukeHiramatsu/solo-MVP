@@ -10,8 +10,9 @@ exports.up = function (knex) {
       .integer("previous_place_id")
       .references("task.id")
       .onDelete("CASCADE");
+    table.integer("next_place_id").references("task.id").onDelete("CASCADE");
     table
-      .integer("releted_project_id")
+      .integer("related_project_id")
       .references("project.id")
       .onDelete("CASCADE")
       .notNullable();

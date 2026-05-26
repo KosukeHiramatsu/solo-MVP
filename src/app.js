@@ -2,7 +2,7 @@ const express = require("express");
 const knex = require("../index");
 
 const { initProject } = require("./Project/index");
-// const { initProduct } = require('./product/index');
+const { initTask } = require("./Task/index");
 // const { initOrder } = require('./order/index');
 
 function buildApp() {
@@ -12,7 +12,7 @@ function buildApp() {
   app.use(express.urlencoded({ extended: true }));
 
   const ProjectController = initProject(knex);
-  //   const productController = initProduct(knex);
+  const TaskController = initTask(knex);
   //   const orderController = initOrder(knex);
 
   function validateIdMiddleware(req, res, next) {
@@ -38,11 +38,10 @@ function buildApp() {
     ProjectController.remove,
   );
 
-  //   app.get('/products', productController.list);
-  //   app.get('/products/:id', validateIdMiddleware, productController.find);
-  //   app.post('/products', productController.create);
-  //   app.patch('/products/:id', validateIdMiddleware, productController.update);
-  //   app.delete('/products/:id', validateIdMiddleware, productController.remove);
+  app.get("/api/tasks/:id", validateIdMiddleware, TaskController.list);
+  app.post("/tasks", TaskController.create);
+  app.patch("/tasks/:id", validateIdMiddleware, TaskController.update);
+  app.delete("/tasks/:id", validateIdMiddleware, TaskController.remove);
 
   //   app.get('/orders', orderController.list);
   //   app.get('/orders/:id', validateIdMiddleware, orderController.find);

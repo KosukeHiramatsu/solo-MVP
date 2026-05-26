@@ -6,6 +6,7 @@ exports.up = function (knex) {
   return knex.schema.createTable("user", function (table) {
     table.increments("id").primary();
     table.string("name", 64).notNullable();
+    table.string("profile_image_url", 2048);
   });
 };
 

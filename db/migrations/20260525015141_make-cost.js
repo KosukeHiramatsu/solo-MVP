@@ -7,17 +7,19 @@ exports.up = function (knex) {
     table.increments("id").primary();
     table.string("type", 64);
     table
-      .integer("releted_project")
+      .integer("related_project_id")
       .references("project.id")
       .onDelete("CASCADE")
       .notNullable();
-    table.integer("releted_task").references("task.id").onDelete("CASCADE");
+    table.integer("related_task_id").references("task.id").onDelete("CASCADE");
     table
-      .integer("releted_movement")
+      .integer("related_movement_id")
       .references("movement.id")
       .onDelete("CASCADE");
     table.decimal("cost", 32, 2);
     table.string("currency", 64);
+    table.datetime("date_of_used");
+    table.datetime("date_of_add").notNullable();
   });
 };
 
