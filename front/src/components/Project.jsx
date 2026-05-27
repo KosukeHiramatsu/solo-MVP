@@ -1,14 +1,36 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { AddTask } from "./AddTask";
 
 export function Project({ projectID, setProjectID }) {
   const navigate = useNavigate();
   const [tasks, setTasks] = useState(null);
-  const [movements, setMovent] = useState(null);
-  const [newTasks, setNewTasks] = useState(null);
+  const [addingTaskId, setAddingTaskId] = useState(null);
+  const [addingMovementId, setAddingMovementId] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [IsAdd, setIsAdd] = useState(false);
+  const [formData, setFormData] = useState({
+    IsMovement: "",
+    type: "",
+    name: "",
+    detail: "",
+    duration: "",
+    arrive_time: "",
+    departure_time: "",
+    related_project_id: "",
+  });
 
+  //   table.increments("id").primary();
+  //   table.boolean("IsMovement").notNullable();
+  //   table.integer("sequence").notNullable();
+  //   table.string("type", 64).notNullable();
+  //   table.string("name", 64);
+  //   table.text("detail");
+  //   table.string("URL_photo", 2048);
+  //   table.string("URL_home", 2048);
+  //   table.string("URL_googlemap", 2048);
+  //   table.datetime("arrive_time").notNullable();
+  //   table.datetime("departure_time").notNullable();
+  //   table.integer("related_project_id");
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -26,57 +48,14 @@ export function Project({ projectID, setProjectID }) {
       }
     };
     fetchData();
-  }, []);
+  }, [projectID]);
 
-  const postFetchData = async () => {
-    setLoading(true);
-    const data = {};
-    try {
-      const response = await fetch(`/api/tasks/${projectID}`, {
-        method: "POST",
-        header: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const data = await response.json();
-      //   setTasks(data.data);
-    } catch (error) {
-      console.error("Failed: ", error);
-    } finally {
-      setLoading(false);
-    }
+  const addtask = (targetId) => {
+    console.log(`ID: ${targetId} の次に追加する処理`);
   };
 
   const editTask = () => {};
-  const addtask = () => {
-    // setNewTasks([
-    //   ...newTasks,
-    //   {
-    //     place_name: place_name,
-    //     type: type,
-    //     detail: detail,
-    //     item: item,
-    //     URL_photo: URL_photo,
-    //     URL_home: URL_home,
-    //     URL_googlemap: URL_googlemap,
-    //     arrive_time: arrive_time,
-    //     previous_place_id,
-    //     related_project_id,
-    //   },
-    // ]);
-    // table.text("item");
-    // table.string("URL_photo", 2048);
-    // table.string("URL_home", 2048);
-    // table.string("URL_googlemap", 2048);
-    // table.datetime("arrive_time").notNullable();
-    // table.datetime("departure_time").notNullable();
-    // table.integer("previous_place_id");
-    // table.integer("related_project_id");
-  };
+
   return (
     <div className="mx-auto p-4">
       {loading && <p className="text-center text-gray-400 py-4">Loading...</p>}
@@ -102,7 +81,7 @@ export function Project({ projectID, setProjectID }) {
                 className="bg-gray-800 rounded-xl p-5 border border-gray-700 hover:border-gray-500 hover:bg-gray-750 text-left w-full"
               >
                 <div className="flex justify-between items-start gap-4">
-                  <div className="text-sm text-gray-300 font-mono text-right flex flex-col items-center">
+                  <div className="text-xs text-gray-300 font-mono text-right flex flex-col items-center">
                     <p>{task.arrive_time?.slice(11, 16)}</p>
                     <p className="text-xs text-gray-500 my-0.5">↓</p>
                     <p>{task.departure_time?.slice(11, 16)}</p>
@@ -116,29 +95,16 @@ export function Project({ projectID, setProjectID }) {
                 </div>
               </div>
             )}
-            {/* {IsAdd?(<div className="flex justify-between items-start gap-4">
-                  <div className="text-sm text-gray-300 font-mono text-right flex flex-col items-center">
-                    <p>{task.arrive_time?.slice(11, 16)}</p>
-                    <p className="text-xs text-gray-500 my-0.5">↓</p>
-                    <p>{task.departure_time?.slice(11, 16)}</p>
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="font-bold text-white">{task.name}</h3>
-                    <p className="text-xs text-gray-400 line-clamp-2">
-                      {task.detail}
-                    </p>
-                  </div>
-                </div>)} */}
-            <div className="absolute -bottom-3 left-0 right-0 flex justify-center z-10 opacity-0 group-hover:opacity-100">
-              <button
-                onClick={() => {
-                  (addtask(task.id), setIsTask(true));
-                }}
-                className="bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold py-1 px-3 rounded-full shadow-lg border border-gray-800 flex items-center gap-1 transform scale-90 hover:scale-100 transition-transform"
-              >
-                <span>＋</span>
-              </button>
-            </div>
+
+            <AddTask
+              taskID={task.id}
+              formData={formData}
+              setFormData={setFormData}
+              addingTaskId={addingTaskId}
+              addingMovementId={addingMovementId}
+              setAddingMovementId={setAddingMovementId}
+              setAddingTaskId={setAddingTaskId}
+            />
           </div>
         ))
       ) : (
@@ -147,8 +113,8 @@ export function Project({ projectID, setProjectID }) {
 
       <div className="fixed bottom-6 right-6 z-50">
         <button
-          onClick={addtask}
-          className="bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold py-1 px-3 rounded-full shadow-lg border border-gray-800 flex items-center gap-1 transform scale-90 hover:scale-100 transition-transform"
+          onClick={() => console.log("全体保存")}
+          className="bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold py-3 px-5 rounded-full shadow-lg border border-gray-800 flex items-center gap-1 transform hover:scale-105 transition-transform"
         >
           保存
         </button>
