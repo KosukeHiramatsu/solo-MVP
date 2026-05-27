@@ -31,16 +31,16 @@ function createTaskRepository(knex, table = "task") {
   const create = async (payload) => {
     const result = await knex(table)
       .insert({
-        place_name: payload.place_name,
+        IsMovement: payload.IsMovement,
+        sequence: payload.sequence,
         type: payload.type,
+        name: payload.name,
         detail: payload.detail ?? null,
-        item: payload.item ?? null,
         URL_photo: payload.URL_photo ?? null,
         URL_home: payload.URL_home ?? null,
         URL_googlemap: payload.URL_googlemap ?? null,
         arrive_time: payload.arrive_time,
         departure_time: payload.departure_time,
-        previous_place_id: payload.previous_place_id ?? null,
         related_project_id: payload.related_project_id,
       })
       .returning("*");

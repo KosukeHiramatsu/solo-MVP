@@ -12,10 +12,6 @@ exports.up = function (knex) {
       .onDelete("CASCADE")
       .notNullable();
     table.integer("related_task_id").references("task.id").onDelete("CASCADE");
-    table
-      .integer("related_movement_id")
-      .references("movement.id")
-      .onDelete("CASCADE");
     table.decimal("cost", 32, 2);
     table.string("currency", 64);
     table.datetime("date_of_used");

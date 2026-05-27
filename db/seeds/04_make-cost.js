@@ -9,109 +9,102 @@ exports.seed = async function (knex) {
   await knex("cost").insert([
     {
       id: 1,
-      type: "交通費", // 飛行機代
+      type: "交通費", // 飛行機代（長距離移動）
       related_project_id: 1,
-      related_task_id: null, // 移動に対するコストなのでタスクはnull
-      related_movement_id: 1, // movementのID1（飛行機）に紐付け
+      related_task_id: null, // 全体に関わる移動コストとしてnull
       cost: 45000.0,
       currency: "JPY",
-      date_of_used: "2026-08-10 09:00:00",
+      date_of_used: "2026-06-01 09:30:00",
       date_of_add: now,
     },
     {
       id: 2,
-      type: "宿泊費", // 白金温泉 ホテルプラザ
+      type: "宿泊費", // 前泊分のホテル代
       related_project_id: 1,
-      related_task_id: 4, // taskのID4（宿泊）に紐付け
-      related_movement_id: null, // タスクに対するコストなので移動はnull
-      cost: 32000.0,
+      related_task_id: 1, // ホテルチェックアウトのタスクに紐付け
+      cost: 12000.0,
       currency: "JPY",
-      date_of_used: "2026-08-10 17:30:00",
+      date_of_used: "2026-06-01 08:00:00",
       date_of_add: now,
     },
     {
       id: 3,
-      type: "食費", // あさひかわラーメン村
+      type: "交通費", // 電車賃（大門〜浅草など想定）
       related_project_id: 1,
-      related_task_id: 6,
-      related_movement_id: null,
-      cost: 1800.0,
+      related_task_id: 3, // 電車移動のタスクに紐付け
+      cost: 650.0,
       currency: "JPY",
-      date_of_used: "2026-08-11 14:30:00",
+      date_of_used: "2026-06-01 08:30:00",
       date_of_add: now,
     },
-
-    // ==========================================
-    // プロジェクト2: 秋の京都・紅葉めぐり（related_project_id: 2）
-    // ==========================================
     {
       id: 4,
-      type: "拝観料", // 清水寺
-      related_project_id: 2,
-      related_task_id: 9,
-      related_movement_id: null,
-      cost: 400.0,
+      type: "食費", // 空港でのランチ
+      related_project_id: 1,
+      related_task_id: 5, // ランチのタスクに紐付け
+      cost: 2500.0,
       currency: "JPY",
-      date_of_used: "2026-11-20 14:00:00",
+      date_of_used: "2026-06-01 11:15:00",
       date_of_add: now,
     },
     {
       id: 5,
-      type: "交通費", // タクシー代（高台寺〜ホテル）
-      related_project_id: 2,
-      related_task_id: null,
-      related_movement_id: 7,
-      cost: 3500.0,
+      type: "交通費", // タクシー代またはレンタカー代
+      related_project_id: 1,
+      related_task_id: 6, // 車移動のタスクに紐付け
+      cost: 3800.0,
       currency: "JPY",
-      date_of_used: "2026-11-20 19:30:00",
+      date_of_used: "2026-06-01 12:00:00",
       date_of_add: now,
     },
     {
       id: 6,
-      type: "食費", // 嵐山よしむら（蕎麦）
-      related_project_id: 2,
-      related_task_id: 14,
-      related_movement_id: null,
-      cost: 4200.0,
+      type: "交際費", // 美術館の入場料（チケット代）
+      related_project_id: 1,
+      related_task_id: 7, // 美術館見学のタスクに紐付け
+      cost: 1800.0,
       currency: "JPY",
-      date_of_used: "2026-11-21 13:00:00",
+      date_of_used: "2026-06-01 12:30:00",
       date_of_add: now,
     },
-
-    // ==========================================
-    // プロジェクト3: 週末弾丸！東京グルメ旅（related_project_id: 3）
-    // ==========================================
     {
       id: 7,
-      type: "交通費", // 地下鉄（築地〜浅草）
-      related_project_id: 3,
-      related_task_id: null,
-      related_movement_id: 9,
-      cost: 220.0,
+      type: "食費", // カフェでの休憩代
+      related_project_id: 1,
+      related_task_id: 9, // カフェ休憩のタスクに紐付け
+      cost: 850.0,
       currency: "JPY",
-      date_of_used: "2026-05-30 10:30:00",
+      date_of_used: "2026-06-01 15:00:00",
       date_of_add: now,
     },
     {
       id: 8,
-      type: "食費", // 浅草 今半（すき焼き）
-      related_project_id: 3,
-      related_task_id: 17,
-      related_movement_id: null,
-      cost: 15000.0,
+      type: "交通費", // 帰りの電車賃
+      related_project_id: 1,
+      related_task_id: 10, // 最後の電車移動タスクに紐付け
+      cost: 420.0,
       currency: "JPY",
-      date_of_used: "2026-05-30 13:15:00",
+      date_of_used: "2026-06-01 15:40:00",
       date_of_add: now,
     },
     {
       id: 9,
-      type: "チケット", // 東京スカイツリー
-      related_project_id: 3,
-      related_task_id: 18,
-      related_movement_id: null,
-      cost: 3100.0,
+      type: "雑費", // 現地でのコインロッカー代など
+      related_project_id: 1,
+      related_task_id: null, // 特定のタスクに紐づかないためnull
+      cost: 500.0,
       currency: "JPY",
-      date_of_used: "2026-05-30 15:45:00",
+      date_of_used: "2026-06-01 10:00:00",
+      date_of_add: now,
+    },
+    {
+      id: 10,
+      type: "お土産代", // クライアントまたは社内へのお土産
+      related_project_id: 1,
+      related_task_id: null,
+      cost: 5500.0,
+      currency: "JPY",
+      date_of_used: "2026-06-01 16:30:00",
       date_of_add: now,
     },
   ]);

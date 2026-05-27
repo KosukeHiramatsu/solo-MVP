@@ -3,7 +3,7 @@ const knex = require("../index");
 
 const { initProject } = require("./Project/index");
 const { initTask } = require("./Task/index");
-// const { initOrder } = require('./order/index');
+// const { initMovement } = require("./Movement/index");
 
 function buildApp() {
   const app = express();
@@ -13,7 +13,7 @@ function buildApp() {
 
   const ProjectController = initProject(knex);
   const TaskController = initTask(knex);
-  //   const orderController = initOrder(knex);
+  //   const MovementController = initMovement(knex);
 
   function validateIdMiddleware(req, res, next) {
     const id = Number(req.params.id);
@@ -43,11 +43,11 @@ function buildApp() {
   app.patch("/tasks/:id", validateIdMiddleware, TaskController.update);
   app.delete("/tasks/:id", validateIdMiddleware, TaskController.remove);
 
-  //   app.get('/orders', orderController.list);
-  //   app.get('/orders/:id', validateIdMiddleware, orderController.find);
-  //   app.post('/orders', orderController.create);
-  //   app.patch('/orders/:id', validateIdMiddleware, orderController.update);
-  //   app.delete('/orders/:id', validateIdMiddleware, orderController.remove);
+  //   app.get("/Movements/:id", validateIdMiddleware, MovementController.list);
+  //   app.get('/Movements', MovementController.list);
+  //   app.post("/Movements", MovementController.create);
+  //   app.patch('/Movements/:id', validateIdMiddleware, MovementController.update);
+  //   app.delete('/Movements/:id', validateIdMiddleware, MovementController.remove);
 
   app.use((req, res) => res.status(404).json({ error: "Not Found" }));
 
