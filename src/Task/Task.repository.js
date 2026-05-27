@@ -28,23 +28,13 @@ function createTaskRepository(knex, table = "task") {
    * @param {Object} payload - 作成する新規プロジェクトデータ
    * @return {Promise<Object>} - 作成された新規プロジェクトのすべてのデータ
    */
-  const create = async (payload) => {
+  const upsert = async (payload) => {
     const result = await knex(table)
-      .insert({
-        IsMovement: payload.IsMovement,
-        sequence: payload.sequence,
-        type: payload.type,
-        name: payload.name,
-        detail: payload.detail ?? null,
-        URL_photo: payload.URL_photo ?? null,
-        URL_home: payload.URL_home ?? null,
-        URL_googlemap: payload.URL_googlemap ?? null,
-        arrive_time: payload.arrive_time,
-        departure_time: payload.departure_time,
-        related_project_id: payload.related_project_id,
-      })
+      .insert(payload)
+      .onConflict("id")
+      .merge()
       .returning("*");
-    return result[0];
+    return result;
   };
 
   /**
@@ -68,7 +58,7 @@ function createTaskRepository(knex, table = "task") {
     await knex(table).where("id", id).del();
   };
 
-  return { list, find, create, update, remove };
+  return { list, find, upsert, update, remove };
 }
 
 module.exports = { createTaskRepository };

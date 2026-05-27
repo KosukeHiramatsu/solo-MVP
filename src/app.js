@@ -39,7 +39,7 @@ function buildApp() {
   );
 
   app.get("/api/tasks/:id", validateIdMiddleware, TaskController.list);
-  app.post("/tasks", TaskController.create);
+  app.post("/api/tasks", TaskController.upsert);
   app.patch("/tasks/:id", validateIdMiddleware, TaskController.update);
   app.delete("/tasks/:id", validateIdMiddleware, TaskController.remove);
 

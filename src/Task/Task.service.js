@@ -1,10 +1,12 @@
+const { upsert } = require("../..");
+
 function createTaskService(repository) {
   const list = async (id) => {
     return await repository.list(id);
   };
 
-  const create = async (payload) => {
-    const created = await repository.create(payload);
+  const upsert = async (payload) => {
+    const created = await repository.upsert(payload);
     return { ok: true, data: created };
   };
 
@@ -24,7 +26,7 @@ function createTaskService(repository) {
     return { ok: true, data: null };
   };
 
-  return { list, create, update, remove };
+  return { list, upsert, update, remove };
 }
 
 module.exports = { createTaskService };

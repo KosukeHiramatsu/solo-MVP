@@ -10,10 +10,9 @@ export function Project({ projectID, setProjectID }) {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     IsMovement: "",
-    type: "",
+    type: "default",
     name: "",
     detail: "",
-    duration: "",
     arrive_time: "",
     departure_time: "",
     related_project_id: "",
@@ -43,6 +42,7 @@ export function Project({ projectID, setProjectID }) {
         setTasks(tasksData.data.sort((a, b) => a.sequence - b.sequence));
       } catch (error) {
         console.error("Failed: ", error);
+        alert("データの保存に失敗しました。通信環境などを確認してください。");
       } finally {
         setLoading(false);
       }
@@ -55,6 +55,36 @@ export function Project({ projectID, setProjectID }) {
   };
 
   const editTask = () => {};
+
+  const upsertTasks = async () => {
+    const sendingTasks = tasks.map((task, index) => {
+      return {
+        ...task,
+        sequence: index,
+        related_project_id: projectID,
+      };
+    });
+    console.log(JSON.stringify(sendingTasks));
+    try {
+      const response = await fetch("/api/tasks", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(sendingTasks),
+      });
+      if (!response.ok) {
+        throw new Error(`サーバーエラーが発生しました: ${response.status}`);
+      }
+      const tasksData = await response.json();
+      console.log(tasksData.data);
+      setTasks(tasksData.data.data.sort((a, b) => a.sequence - b.sequence));
+      alert("データの保存が完了しました！");
+    } catch (error) {
+      console.error("保存失敗:", error);
+      alert("データの保存に失敗しました。通信環境などを確認してください。");
+    }
+  };
 
   return (
     <div className="mx-auto p-4">
@@ -97,6 +127,8 @@ export function Project({ projectID, setProjectID }) {
             )}
 
             <AddTask
+              tasks={tasks}
+              setTasks={setTasks}
               taskID={task.id}
               formData={formData}
               setFormData={setFormData}
@@ -113,7 +145,7 @@ export function Project({ projectID, setProjectID }) {
 
       <div className="fixed bottom-6 right-6 z-50">
         <button
-          onClick={() => console.log("全体保存")}
+          onClick={upsertTasks}
           className="bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold py-3 px-5 rounded-full shadow-lg border border-gray-800 flex items-center gap-1 transform hover:scale-105 transition-transform"
         >
           保存

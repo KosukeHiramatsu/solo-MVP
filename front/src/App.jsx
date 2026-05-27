@@ -14,19 +14,18 @@ function App() {
   return (
     <div className="bg-bg-[#F4F1EA]">
       <NavbarDefault />
-      <div className="Ap ">
+      <div>
         <BrowserRouter>
+          <Login />
           <div className="App">
-            <Link to="/login">login</Link>
+            <Link to="/home">Page1</Link>
             {/* <br />
-        <Link to="/page1">Page1</Link>
         <br />
         <Link to="/page2">Page2</Link>
         <br />
         <Link to="/page3">Page3</Link> */
             /* <br /> */}
             <Routes>
-              <Route path="/login" element={<Login />} />
               <Route
                 path="/home"
                 element={<Home setProjectID={setProjectID} />}

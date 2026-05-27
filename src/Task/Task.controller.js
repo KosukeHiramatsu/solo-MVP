@@ -5,8 +5,8 @@ function createTaskController(service) {
     res.status(200).json({ data: result });
   };
 
-  const create = async (req, res) => {
-    const result = await service.create(req.body);
+  const upsert = async (req, res) => {
+    const result = await service.upsert(req.body);
     res.status(201).json({ data: result });
   };
 
@@ -30,7 +30,7 @@ function createTaskController(service) {
     }
   };
 
-  return { list, create, update, remove };
+  return { list, upsert, update, remove };
 }
 
 module.exports = { createTaskController };
