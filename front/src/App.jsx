@@ -10,37 +10,27 @@ function App() {
   // const [count, setCount] = useState(0);
   const [projectID, setProjectID] = useState(null);
   const [openNav, setOpenNav] = useState(false);
-
   return (
-    <div className="bg-bg-[#F4F1EA]">
-      <NavbarDefault />
-      <div>
-        <BrowserRouter>
-          <Login />
-          <div className="App">
-            <Link to="/home">Page1</Link>
-            {/* <br />
-        <br />
-        <Link to="/page2">Page2</Link>
-        <br />
-        <Link to="/page3">Page3</Link> */
-            /* <br /> */}
-            <Routes>
-              <Route
-                path="/home"
-                element={<Home setProjectID={setProjectID} />}
-              />
-              <Route
-                path="/project"
-                element={
-                  <Project projectID={projectID} setProjectID={setProjectID} />
-                }
-              />
-              {/* <Route path="/projects/:id" element={<ProjectEdit />} /> */}
-            </Routes>
-          </div>
-        </BrowserRouter>
-      </div>
+    <div className="min-h-screen">
+      <BrowserRouter>
+        <NavbarDefault />
+
+        <div className="App">
+          <Routes>
+            <Route path="/" element={<Login />} />
+            <Route
+              path="/home"
+              element={<Home setProjectID={setProjectID} />}
+            />
+            <Route
+              path="/project"
+              element={
+                <Project projectID={projectID} setProjectID={setProjectID} />
+              }
+            />
+          </Routes>
+        </div>
+      </BrowserRouter>
     </div>
   );
 }

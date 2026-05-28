@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import logo from "../assets/logo.png";
+import { useNavigate } from "react-router-dom";
 
 export function NavbarDefault() {
+  const navigate = useNavigate();
+
   return (
     <nav className="bg-white backdrop-blur-md shadow-md">
       <div className="max-w-7xl mx-auto px-4">
@@ -17,9 +20,12 @@ export function NavbarDefault() {
             </div>
           </div>
           <div className="text-sm flex space-x-4">
-            <a href="#" className="text-gray-600 hover:text-blue-500">
+            <button
+              className="text-gray-600 hover:text-blue-500"
+              onClick={() => navigate("/home")}
+            >
               Home
-            </a>
+            </button>
           </div>
         </div>
       </div>

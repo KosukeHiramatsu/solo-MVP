@@ -97,7 +97,6 @@ export function Project({ projectID, setProjectID }) {
               <div className="flex flex-col items-center justify-center">
                 <div className="h-1 w-0.5 bg-gray-600"></div>
                 <div className="bg-gray-800 text-gray-400 text-xs px-4 py-1.5 rounded-full border border-gray-700 flex gap-3">
-                  <span className="font-semibold">{task.type}</span>
                   <span>
                     {task.arrive_time?.slice(11, 16)} -{" "}
                     {task.departure_time?.slice(11, 16)}
@@ -108,10 +107,11 @@ export function Project({ projectID, setProjectID }) {
             ) : (
               <div
                 onClick={editTask}
-                className="bg-gray-800 rounded-xl p-5 border border-gray-700 hover:border-gray-500 hover:bg-gray-750 text-left w-full"
+                className="bg-gray-800 rounded-xl p-3 border border-gray-700 hover:border-gray-500 hover:bg-gray-750 text-left w-full"
               >
                 <div className="flex justify-between items-start gap-4">
                   <div className="text-xs text-gray-300 font-mono text-right flex flex-col items-center">
+                    <h2>{task.arrive_time?.slice(5, 10)} </h2>
                     <p>{task.arrive_time?.slice(11, 16)}</p>
                     <p className="text-xs text-gray-500 my-0.5">↓</p>
                     <p>{task.departure_time?.slice(11, 16)}</p>

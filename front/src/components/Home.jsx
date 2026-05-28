@@ -36,34 +36,34 @@ export function Home({ setProjectID }) {
         {loading && <p>Loading...</p>}
         {projects !== null ? (
           projects.map((project) => (
-            <li className="flex justify-between gap-x-6 py-5">
+            <div
+              key={project.id}
+              className="flex flex-col items-center justify-center bg-gray-800 rounded-xl p-5 border border-gray-700 hover:border-gray-500 hover:bg-gray-750 text-left w-full group relative"
+            >
               <button
                 onClick={() => {
                   setProjectID(project.id);
                   navigate("/project");
                 }}
               >
-                <div className="min-w-0 flex-auto">
-                  <p className="text-sm/6 font-semibold text-white">
-                    {project.name}
-                  </p>
-                  <p className="mt-1 truncate text-xs/5 text-gray-400">
-                    {project.detail}
-                  </p>
+                <div className="min-w-0 flex-auto flex text-left gap-4">
+                  <div className="text-xs text-gray-300 font-mono text-right flex flex-col items-center">
+                    <h2>{project.date_of_created?.slice(5, 10)} </h2>
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-sm/6 font-semibold text-white">
+                      {project.name}
+                    </p>
+                    <p className="mt-1 truncate text-xs/5 text-gray-400 line-clamp-2">
+                      {project.detail}
+                    </p>
+                  </div>
                 </div>
                 <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
-                  <p>{project.date_of_created}</p>
-                  <p>{project.date_of_lastEdit}</p>
                   <p>{project.createdBy}</p>
-                  <p className="mt-1 text-xs/5 text-gray-400">
-                    Last Edit{" "}
-                    <time datatime="2023-01-23T13:23Z">
-                      {project.date_of_lastEdit}
-                    </time>
-                  </p>
                 </div>
               </button>
-            </li>
+            </div>
           ))
         ) : (
           <p>There is no projects</p>
