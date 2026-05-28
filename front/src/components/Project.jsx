@@ -18,18 +18,6 @@ export function Project({ projectID, setProjectID }) {
     related_project_id: "",
   });
 
-  //   table.increments("id").primary();
-  //   table.boolean("IsMovement").notNullable();
-  //   table.integer("sequence").notNullable();
-  //   table.string("type", 64).notNullable();
-  //   table.string("name", 64);
-  //   table.text("detail");
-  //   table.string("URL_photo", 2048);
-  //   table.string("URL_home", 2048);
-  //   table.string("URL_googlemap", 2048);
-  //   table.datetime("arrive_time").notNullable();
-  //   table.datetime("departure_time").notNullable();
-  //   table.integer("related_project_id");
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -97,6 +85,7 @@ export function Project({ projectID, setProjectID }) {
               <div className="flex flex-col items-center justify-center">
                 <div className="h-1 w-0.5 bg-gray-600"></div>
                 <div className="bg-gray-800 text-gray-400 text-xs px-4 py-1.5 rounded-full border border-gray-700 flex gap-3">
+                  <span className="font-semibold text-white">{task.type}</span>
                   <span>
                     {task.arrive_time?.slice(11, 16)} -{" "}
                     {task.departure_time?.slice(11, 16)}

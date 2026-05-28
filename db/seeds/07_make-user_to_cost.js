@@ -22,4 +22,7 @@ exports.seed = async function (knex) {
     { user_id: 101, cost_id: 8, is_payer: true },
     { user_id: 101, cost_id: 9, is_payer: true },
   ]);
+  await knex.raw(
+    "SELECT setval(pg_get_serial_sequence('task', 'id'), (SELECT MAX(id) FROM task))",
+  );
 };
